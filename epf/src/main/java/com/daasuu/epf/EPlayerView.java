@@ -21,7 +21,7 @@ public class EPlayerView extends GLSurfaceView implements VideoListener {
     private SimpleExoPlayer player;
 
     private float videoAspect = 1f;
-    private PlayerScaleType playerScaleType = PlayerScaleType.RESIZE_FIT_WIDTH;
+    private PlayerScaleType playerScaleType = PlayerScaleType.RESIZE_FIT_HEIGHT;
 
     public EPlayerView(Context context) {
         this(context, null);
@@ -98,6 +98,11 @@ public class EPlayerView extends GLSurfaceView implements VideoListener {
         videoAspect = ((float) width / height) * pixelWidthHeightRatio;
         // Log.d(TAG, "videoAspect = " + videoAspect);
         requestLayout();
+    }
+
+    @Override
+    public void onSurfaceSizeChanged(int width, int height) {
+
     }
 
     @Override

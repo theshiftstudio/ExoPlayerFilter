@@ -1,7 +1,8 @@
 package com.daasuu.exoplayerfilter;
 
-import android.net.Uri;
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -9,13 +10,14 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
+import android.widget.ToggleButton;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.daasuu.epf.EPlayerView;
 import com.google.android.exoplayer2.ExoPlayerFactory;
 import com.google.android.exoplayer2.SimpleExoPlayer;
-import com.google.android.exoplayer2.source.MediaSource;
 import com.google.android.exoplayer2.source.ProgressiveMediaSource;
 import com.google.android.exoplayer2.upstream.DataSource;
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
@@ -26,9 +28,14 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static final int PICK_MEDIA = 1;
+
+    private DataSource.Factory dataSourceFactory;
+
     private EPlayerView ePlayerView;
     private SimpleExoPlayer player;
     private Button button;
+    private Button pickVideo;
     private SeekBar seekBar;
     private PlayerTimer playerTimer;
 
@@ -37,21 +44,15 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        setUpViews();
-
+        setupViews();
+        setupSimpleExoPlayer();
+        setupGlPlayerView();
+        setupTimer();
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-        setUpSimpleExoPlayer();
-        setUoGlPlayerView();
-        setUpTimer();
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
+    protected void onDestroy() {
+        super.onDestroy();
         releasePlayer();
         if (playerTimer != null) {
             playerTimer.stop();
@@ -59,9 +60,22 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void setUpViews() {
+    private void setupViews() {
         // play pause
         button = (Button) findViewById(R.id.btn);
+        pickVideo = ((Button) findViewById(R.id.pick));
+
+        View tools = findViewById(R.id.tools);
+        ToggleButton toolsToggle = ((ToggleButton) findViewById(R.id.tools_toggle));
+
+        toolsToggle.setOnCheckedChangeListener((compoundButton, isChecked) -> {
+            if (isChecked) {
+                tools.setVisibility(View.VISIBLE);
+            } else {
+                tools.setVisibility(View.GONE);
+            }
+        });
+
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -76,6 +90,15 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+
+        pickVideo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                pickVideo();
+            }
+        });
+
+
 
         // seek
         seekBar = (SeekBar) findViewById(R.id.seekBar);
@@ -117,26 +140,18 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    private void setUpSimpleExoPlayer() {
+    private void setupSimpleExoPlayer() {
 
 
         // Produces DataSource instances through which media data is loaded.
-        DataSource.Factory dataSourceFactory = new DefaultDataSourceFactory(this, Util.getUserAgent(this, "yourApplicationName"));
+        dataSourceFactory = new DefaultDataSourceFactory(this, Util.getUserAgent(this, "yourApplicationName"));
 
-        // This is the MediaSource representing the media to be played.
-        MediaSource videoSource = new ProgressiveMediaSource.Factory(dataSourceFactory)
-                .createMediaSource(Uri.parse(Constant.STREAM_URL_MP4_VOD_SHORT));
-
-        // SimpleExoPlayer
         player = ExoPlayerFactory.newSimpleInstance(this);
-        // Prepare the player with the source.
-        player.prepare(videoSource);
-        player.setPlayWhenReady(true);
 
     }
 
 
-    private void setUoGlPlayerView() {
+    private void setupGlPlayerView() {
         ePlayerView = new EPlayerView(this);
         ePlayerView.setSimpleExoPlayer(player);
         ePlayerView.setLayoutParams(new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
@@ -145,7 +160,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    private void setUpTimer() {
+    private void setupTimer() {
         playerTimer = new PlayerTimer();
         playerTimer.setCallback(new PlayerTimer.Callback() {
             @Override
@@ -172,5 +187,31 @@ public class MainActivity extends AppCompatActivity {
         player = null;
     }
 
+    private void pickVideo() {
+        pickMedia("video/*");
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode == RESULT_OK && data.getData() != null) {
+            Log.i("FILTERS", "onActivityResult: "+data.getData());
+            ProgressiveMediaSource mediaSource = new ProgressiveMediaSource.Factory(dataSourceFactory)
+                    .createMediaSource(data.getData());
+            player.prepare(mediaSource);
+            player.setPlayWhenReady(true);
+        }
+    }
+
+    private void pickMedia(@NonNull String type) {
+
+        Intent intent = new Intent();
+        intent.setType(type);
+        intent.setAction(Intent.ACTION_OPEN_DOCUMENT);
+        intent.putExtra(Intent.EXTRA_LOCAL_ONLY, true);
+        intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, false);
+        startActivityForResult(Intent.createChooser(intent, "Pick Media"), PICK_MEDIA);
+    }
 
 }

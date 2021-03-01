@@ -80,11 +80,9 @@ public class GlFilterGroup extends GlFilter {
         }
     }
 
-    private int prevTexName;
-
     @Override
     public void draw(final int texName, final EFramebufferObject fbo) {
-        prevTexName = texName;
+        int prevTexName = texName;
         for (final Pair<GlFilter, EFramebufferObject> pair : list) {
             if (pair.second != null) {
                 if (pair.first != null) {

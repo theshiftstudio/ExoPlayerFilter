@@ -3,10 +3,10 @@ package com.daasuu.epf.filter;
 import android.content.res.Resources;
 import android.opengl.GLES20;
 
-import java.util.HashMap;
-
-import com.daasuu.epf.EglUtil;
 import com.daasuu.epf.EFramebufferObject;
+import com.daasuu.epf.EglUtil;
+
+import java.util.HashMap;
 
 import static android.opengl.GLES20.GL_FLOAT;
 import static android.opengl.GLES20.GL_FRAGMENT_SHADER;
@@ -144,7 +144,7 @@ public class GlFilter {
     protected final int getHandle(final String name) {
         final Integer value = handleMap.get(name);
         if (value != null) {
-            return value.intValue();
+            return value;
         }
 
         int location = glGetAttribLocation(program, name);
@@ -154,7 +154,7 @@ public class GlFilter {
         if (location == -1) {
             throw new IllegalStateException("Could not get attrib or uniform location for " + name);
         }
-        handleMap.put(name, Integer.valueOf(location));
+        handleMap.put(name, location);
         return location;
     }
 
