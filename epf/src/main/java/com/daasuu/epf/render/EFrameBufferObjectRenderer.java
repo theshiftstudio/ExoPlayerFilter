@@ -1,9 +1,11 @@
-package com.daasuu.epf;
+package com.daasuu.epf.render;
 
 import android.opengl.GLES20;
 import android.opengl.GLSurfaceView;
 
-import com.daasuu.epf.filter.GlFilter;
+import com.daasuu.epf.fbo.EFrameBufferObject;
+import com.daasuu.epf.fbo.FrameBufferObject;
+import com.daasuu.epf.filter.GlBaseFilter;
 
 import java.util.LinkedList;
 import java.util.Queue;
@@ -21,27 +23,32 @@ import static android.opengl.GLES20.GL_FRAMEBUFFER;
 
 abstract class EFrameBufferObjectRenderer implements GLSurfaceView.Renderer {
 
-    private EFramebufferObject framebufferObject;
-    private GlFilter normalShader;
+    private FrameBufferObject framebufferObject;
+    private GlBaseFilter normalShader;
+
+    private int width;
+    private int height;
 
     private final Queue<Runnable> runOnDraw;
 
 
     EFrameBufferObjectRenderer() {
-        runOnDraw = new LinkedList<Runnable>();
+        runOnDraw = new LinkedList<>();
     }
 
 
     @Override
     public final void onSurfaceCreated(final GL10 gl, final EGLConfig config) {
-        framebufferObject = new EFramebufferObject();
-        normalShader = new GlFilter();
+        framebufferObject = new EFrameBufferObject();
+        normalShader = new GlBaseFilter();
         normalShader.setup();
         onSurfaceCreated(config);
     }
 
     @Override
     public final void onSurfaceChanged(final GL10 gl, final int width, final int height) {
+        this.width = width;
+        this.height = height;
         framebufferObject.setup(width, height);
         normalShader.setFrameSize(width, height);
         onSurfaceChanged(width, height);
@@ -55,20 +62,15 @@ abstract class EFrameBufferObjectRenderer implements GLSurfaceView.Renderer {
             }
         }
         framebufferObject.enable();
-        GLES20.glViewport(0, 0, framebufferObject.getWidth(), framebufferObject.getHeight());
+        GLES20.glViewport(0, 0, width, height);
 
-        onDrawFrame(framebufferObject);
+        onDrawFrame(framebufferObject, width, height);
 
         GLES20.glBindFramebuffer(GL_FRAMEBUFFER, 0);
-        GLES20.glViewport(0, 0, framebufferObject.getWidth(), framebufferObject.getHeight());
+        GLES20.glViewport(0, 0, width, height);
 
         GLES20.glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-        normalShader.draw(framebufferObject.getTexName(), null);
-
-    }
-
-    @Override
-    protected void finalize() throws Throwable {
+        normalShader.draw(framebufferObject.getTexName());
 
     }
 
@@ -76,5 +78,5 @@ abstract class EFrameBufferObjectRenderer implements GLSurfaceView.Renderer {
 
     public abstract void onSurfaceChanged(int width, int height);
 
-    public abstract void onDrawFrame(EFramebufferObject fbo);
+    public abstract void onDrawFrame(FrameBufferObject fbo, int width, int height);
 }

@@ -3,7 +3,7 @@ package com.daasuu.epf.filter;
 import android.graphics.PointF;
 import android.opengl.GLES20;
 
-public class GlZoomBlurFilter extends GlFilter {
+public class GlZoomBlurFilter extends GlBaseFilter {
 
     private static final String ZOOM_BLUR_FRAGMENT_SHADER = "" +
             "precision mediump float;" +

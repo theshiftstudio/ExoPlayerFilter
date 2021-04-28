@@ -2,7 +2,7 @@ package com.daasuu.epf.filter;
 
 import android.opengl.GLES20;
 
-public class GlVibranceFilter extends GlFilter {
+public class GlVibranceFilter extends GlBaseFilter {
 
     private static final String VIBRANCE_FRAGMENT_SHADER = "" +
             "precision mediump float;" +

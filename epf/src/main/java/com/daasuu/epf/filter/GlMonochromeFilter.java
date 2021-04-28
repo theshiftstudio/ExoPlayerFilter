@@ -6,7 +6,7 @@ import android.opengl.GLES20;
  * Created by sudamasayuki on 2017/05/18.
  */
 
-public class GlMonochromeFilter extends GlFilter {
+public class GlMonochromeFilter extends GlBaseFilter {
 
     private static final String FRAGMENT_SHADER =
             "precision lowp float;" +

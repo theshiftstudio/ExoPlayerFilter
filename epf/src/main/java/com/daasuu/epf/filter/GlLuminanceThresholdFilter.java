@@ -2,7 +2,7 @@ package com.daasuu.epf.filter;
 
 import android.opengl.GLES20;
 
-public class GlLuminanceThresholdFilter extends GlFilter {
+public class GlLuminanceThresholdFilter extends GlBaseFilter {
 
     private static final String LUMINANCE_THRESHOLD_FRAGMENT_SHADER = "" +
             "precision mediump float;" +

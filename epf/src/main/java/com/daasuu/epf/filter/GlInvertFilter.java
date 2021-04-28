@@ -4,7 +4,7 @@ package com.daasuu.epf.filter;
  * Created by sudamasayuki on 2017/05/18.
  */
 
-public class GlInvertFilter extends GlFilter {
+public class GlInvertFilter extends GlBaseFilter {
     private static final String FRAGMENT_SHADER =
             "precision mediump float;" +
                     "varying vec2 vTextureCoord;" +

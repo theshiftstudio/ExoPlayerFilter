@@ -6,7 +6,7 @@ import android.opengl.GLES20;
  * Created by sudamasayuki on 2017/05/18.
  */
 
-public class GlThreex3TextureSamplingFilter extends GlFilter {
+public class GlThreex3TextureSamplingFilter extends GlBaseFilter {
     private static final String THREE_X_THREE_TEXTURE_SAMPLING_VERTEX_SHADER =
             "attribute vec4 aPosition;" +
                     "attribute vec4 aTextureCoord;" +

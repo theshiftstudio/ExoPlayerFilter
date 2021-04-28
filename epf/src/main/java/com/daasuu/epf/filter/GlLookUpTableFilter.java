@@ -11,7 +11,7 @@ import com.daasuu.epf.EglUtil;
  * Created by sudamasayuki on 2017/05/16.
  */
 
-public class GlLookUpTableFilter extends GlFilter {
+public class GlLookUpTableFilter extends GlBaseFilter {
 
     private final static String FRAGMENT_SHADER =
             "precision mediump float;" +

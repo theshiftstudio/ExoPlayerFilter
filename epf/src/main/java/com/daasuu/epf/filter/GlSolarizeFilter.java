@@ -2,7 +2,7 @@ package com.daasuu.epf.filter;
 
 import android.opengl.GLES20;
 
-public class GlSolarizeFilter extends GlFilter {
+public class GlSolarizeFilter extends GlBaseFilter {
 
     private static final String SOLATIZE_FRAGMENT_SHADER = "" +
             "precision mediump float;" +

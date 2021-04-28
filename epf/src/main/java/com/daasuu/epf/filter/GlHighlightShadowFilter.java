@@ -2,7 +2,7 @@ package com.daasuu.epf.filter;
 
 import android.opengl.GLES20;
 
-public class GlHighlightShadowFilter extends GlFilter {
+public class GlHighlightShadowFilter extends GlBaseFilter {
 
     private static final String HIGHLIGHT_SHADOW_FRAGMENT_SHADER = "" +
             "precision mediump float;" +

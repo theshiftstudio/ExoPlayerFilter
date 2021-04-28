@@ -2,7 +2,7 @@ package com.daasuu.epf.filter;
 
 import android.opengl.GLES20;
 
-public class GlGammaFilter extends GlFilter {
+public class GlGammaFilter extends GlBaseFilter {
     private static final String GAMMA_FRAGMENT_SHADER = "" +
             "precision mediump float;" +
             " varying vec2 vTextureCoord;\n" +

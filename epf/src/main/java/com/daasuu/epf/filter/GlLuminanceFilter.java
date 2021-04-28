@@ -1,6 +1,6 @@
 package com.daasuu.epf.filter;
 
-public class GlLuminanceFilter extends GlFilter {
+public class GlLuminanceFilter extends GlBaseFilter {
 
     private static final String LUMINANCE_FRAGMENT_SHADER = "" +
             "precision mediump float;" +

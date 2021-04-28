@@ -5,7 +5,7 @@ import android.opengl.GLES20;
 /**
  * exposure: The adjusted exposure (-10.0 - 10.0, with 0.0 as the default)
  */
-public class GlExposureFilter extends GlFilter {
+public class GlExposureFilter extends GlBaseFilter {
 
     private static final String EXPOSURE_FRAGMENT_SHADER = "" +
             "precision mediump float;" +

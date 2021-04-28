@@ -2,7 +2,7 @@ package com.daasuu.epf.filter;
 
 import android.opengl.GLES20;
 
-public class GlPixelationFilter extends GlFilter {
+public class GlPixelationFilter extends GlBaseFilter {
 
     private static final String PIXELATION_FRAGMENT_SHADER = "" +
             "precision highp float;\n" +
@@ -34,7 +34,6 @@ public class GlPixelationFilter extends GlFilter {
 
     @Override
     public void setFrameSize(int width, int height) {
-        super.setFrameSize(width, height);
         imageWidthFactor = 1f / width;
         imageHeightFactor = 1f / height;
     }

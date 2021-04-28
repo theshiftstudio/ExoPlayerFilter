@@ -2,6 +2,7 @@ package com.daasuu.epf.filter;
 
 import android.opengl.GLES20;
 
+import static android.opengl.GLES11Ext.GL_TEXTURE_EXTERNAL_OES;
 import static android.opengl.GLES20.GL_ARRAY_BUFFER;
 import static android.opengl.GLES20.GL_FLOAT;
 import static android.opengl.GLES20.GL_TEXTURE0;
@@ -12,9 +13,7 @@ import static android.opengl.GLES20.GL_TRIANGLE_STRIP;
  * Created by sudamasayuki on 2017/05/16.
  */
 
-public class GlPreviewFilter extends GlFilter {
-
-    public static final int GL_TEXTURE_EXTERNAL_OES = 0x8D65;
+public class GlPreviewFilter extends GlBaseFilter {
 
     private static final String VERTEX_SHADER =
             "uniform mat4 uMVPMatrix;\n" +

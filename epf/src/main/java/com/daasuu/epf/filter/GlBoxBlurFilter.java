@@ -6,7 +6,7 @@ import android.opengl.GLES20;
  * Created by sudamasayuki on 2017/05/18.
  */
 
-public class GlBoxBlurFilter extends GlFilter {
+public class GlBoxBlurFilter extends GlBaseFilter {
 
     private static final String VERTEX_SHADER =
             "attribute vec4 aPosition;" +

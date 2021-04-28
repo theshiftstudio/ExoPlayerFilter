@@ -2,7 +2,7 @@ package com.daasuu.epf.filter;
 
 import android.opengl.GLES20;
 
-public class GlWhiteBalanceFilter extends GlFilter {
+public class GlWhiteBalanceFilter extends GlBaseFilter {
 
     private static final String WHITE_BALANCE_FRAGMENT_SHADER = "" +
             " uniform lowp sampler2D sTexture;\n" +

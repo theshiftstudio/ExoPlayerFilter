@@ -1,6 +1,8 @@
-package com.daasuu.epf;
+package com.daasuu.epf.fbo;
 
 import android.opengl.GLES20;
+
+import com.daasuu.epf.EglUtil;
 
 import static android.opengl.GLES20.GL_COLOR_ATTACHMENT0;
 import static android.opengl.GLES20.GL_DEPTH_ATTACHMENT;
@@ -23,26 +25,23 @@ import static android.opengl.GLES20.GL_UNSIGNED_BYTE;
  * Created by sudamasayuki on 2017/05/16.
  */
 
-public class EFramebufferObject {
+public class EFrameBufferObject implements FrameBufferObject {
 
-    private int width;
-    private int height;
-    private int framebufferName;
-    private int renderbufferName;
+    private int frameBufferName;
+    private int renderBufferName;
     private int texName;
 
-    public int getWidth() {
-        return width;
-    }
-
-    public int getHeight() {
-        return height;
-    }
-
+    @Override
     public int getTexName() {
         return texName;
     }
 
+    @Override
+    public int getFrameBufferName() {
+        return frameBufferName;
+    }
+
+    @Override
     public void setup(final int width, final int height) {
         final int[] args = new int[1];
 
@@ -66,18 +65,16 @@ public class EFramebufferObject {
         release();
 
         try {
-            this.width = width;
-            this.height = height;
 
             GLES20.glGenFramebuffers(args.length, args, 0);
-            framebufferName = args[0];
-            GLES20.glBindFramebuffer(GL_FRAMEBUFFER, framebufferName);
+            frameBufferName = args[0];
+            GLES20.glBindFramebuffer(GL_FRAMEBUFFER, frameBufferName);
 
             GLES20.glGenRenderbuffers(args.length, args, 0);
-            renderbufferName = args[0];
-            GLES20.glBindRenderbuffer(GL_RENDERBUFFER, renderbufferName);
+            renderBufferName = args[0];
+            GLES20.glBindRenderbuffer(GL_RENDERBUFFER, renderBufferName);
             GLES20.glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT16, width, height);
-            GLES20.glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, renderbufferName);
+            GLES20.glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, renderBufferName);
 
             GLES20.glGenTextures(args.length, args, 0);
             texName = args[0];
@@ -102,21 +99,23 @@ public class EFramebufferObject {
         GLES20.glBindTexture(GL_TEXTURE_2D, saveTexName);
     }
 
+    @Override
     public void release() {
         final int[] args = new int[1];
         args[0] = texName;
         GLES20.glDeleteTextures(args.length, args, 0);
         texName = 0;
-        args[0] = renderbufferName;
+        args[0] = renderBufferName;
         GLES20.glDeleteRenderbuffers(args.length, args, 0);
-        renderbufferName = 0;
-        args[0] = framebufferName;
+        renderBufferName = 0;
+        args[0] = frameBufferName;
         GLES20.glDeleteFramebuffers(args.length, args, 0);
-        framebufferName = 0;
+        frameBufferName = 0;
     }
 
+    @Override
     public void enable() {
-        GLES20.glBindFramebuffer(GL_FRAMEBUFFER, framebufferName);
+        GLES20.glBindFramebuffer(GL_FRAMEBUFFER, frameBufferName);
     }
 
 

@@ -4,7 +4,7 @@ package com.daasuu.epf.filter;
  * Created by sudamasayuki on 2017/05/18.
  */
 
-public class GlCGAColorspaceFilter extends GlFilter {
+public class GlCGAColorspaceFilter extends GlBaseFilter {
 
     private static final String FRAGMENT_SHADER =
             "precision mediump float;" +

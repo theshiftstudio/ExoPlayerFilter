@@ -2,7 +2,7 @@ package com.daasuu.epf.filter;
 
 import android.opengl.GLES20;
 
-public class GlSaturationFilter extends GlFilter {
+public class GlSaturationFilter extends GlBaseFilter {
     private static final String SATURATION_FRAGMENT_SHADER = "" +
             "precision mediump float;" +
             " varying vec2 vTextureCoord;\n" +

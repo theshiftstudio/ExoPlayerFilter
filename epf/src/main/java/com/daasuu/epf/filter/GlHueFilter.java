@@ -2,7 +2,7 @@ package com.daasuu.epf.filter;
 
 import android.opengl.GLES20;
 
-public class GlHueFilter extends GlFilter {
+public class GlHueFilter extends GlBaseFilter {
 
     private static final String HUE_FRAGMENT_SHADER = "" +
             "precision highp float;\n" +

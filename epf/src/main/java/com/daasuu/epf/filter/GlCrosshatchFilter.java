@@ -2,7 +2,7 @@ package com.daasuu.epf.filter;
 
 import android.opengl.GLES20;
 
-public class GlCrosshatchFilter extends GlFilter {
+public class GlCrosshatchFilter extends GlBaseFilter {
 
     private static final String CROSSHATCH_FRAGMENT_SHADER = "" +
             "precision mediump float;" +
@@ -69,7 +69,6 @@ public class GlCrosshatchFilter extends GlFilter {
 
     @Override
     public void setFrameSize(int width, int height) {
-        super.setFrameSize(width, height);
 
         float singlePixelSpacing;
         if (width != 0) {

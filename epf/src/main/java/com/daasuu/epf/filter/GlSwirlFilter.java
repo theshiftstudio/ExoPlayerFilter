@@ -3,7 +3,7 @@ package com.daasuu.epf.filter;
 import android.graphics.PointF;
 import android.opengl.GLES20;
 
-public class GlSwirlFilter extends GlFilter {
+public class GlSwirlFilter extends GlBaseFilter {
 
     private static final String SWIRL_FRAGMENT_SHADER = "" +
             "precision mediump float;" +

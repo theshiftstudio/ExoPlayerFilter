@@ -6,19 +6,18 @@ import android.graphics.Color;
 import android.opengl.GLES20;
 import android.opengl.GLUtils;
 
-import com.daasuu.epf.Resolution;
-
 /**
  * Created by sudamasayuki on 2017/05/18.
  */
 
-public abstract class GlOverlayFilter extends GlFilter {
+public abstract class GlOverlayFilter extends GlBaseFilter {
 
-    private int[] textures = new int[1];
+    private final int[] textures = new int[1];
 
     private Bitmap bitmap = null;
 
-    protected Resolution inputResolution = new Resolution(1280, 720);
+    protected int width = 1280;
+    protected int height = 720;
 
     public GlOverlayFilter() {
         super(DEFAULT_VERTEX_SHADER, FRAGMENT_SHADER);
@@ -36,19 +35,19 @@ public abstract class GlOverlayFilter extends GlFilter {
                     "   gl_FragColor = mix(textureColor, textureColor2, textureColor2.a);\n" +
                     "}\n";
 
-    public void setResolution(Resolution resolution) {
-        this.inputResolution = resolution;
+    public void setResolution(int width, int height) {
+        this.width = width;
+        this.height = height;
     }
 
     @Override
     public void setFrameSize(int width, int height) {
-        super.setFrameSize(width, height);
-        setResolution(new Resolution(width, height));
+        setResolution(width, height);
     }
 
     private void createBitmap() {
         releaseBitmap(bitmap);
-        bitmap = Bitmap.createBitmap(inputResolution.width(), inputResolution.height(), Bitmap.Config.ARGB_8888);
+        bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
     }
 
     @Override
@@ -70,7 +69,7 @@ public abstract class GlOverlayFilter extends GlFilter {
         if (bitmap == null) {
             createBitmap();
         }
-        if (bitmap.getWidth() != inputResolution.width() || bitmap.getHeight() != inputResolution.height()) {
+        if (bitmap.getWidth() != width || bitmap.getHeight() != height) {
             createBitmap();
         }
 

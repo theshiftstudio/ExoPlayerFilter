@@ -6,7 +6,7 @@ import android.opengl.GLES20;
 /**
  * brightness value ranges from -1.0 to 1.0, with 0.0 as the normal level
  */
-public class GlBrightnessFilter extends GlFilter {
+public class GlBrightnessFilter extends GlBaseFilter {
     private static final String BRIGHTNESS_FRAGMENT_SHADER = "" +
             "precision mediump float;" +
             " varying vec2 vTextureCoord;\n" +

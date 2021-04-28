@@ -7,7 +7,7 @@ import android.opengl.GLES20;
  * Changes the contrast of the image.
  * contrast value ranges from 0.0 to 4.0, with 1.0 as the normal level
  */
-public class GlContrastFilter extends GlFilter {
+public class GlContrastFilter extends GlBaseFilter {
 
     private static final String CONTRAST_FRAGMENT_SHADER = "" +
             "precision mediump float;" +

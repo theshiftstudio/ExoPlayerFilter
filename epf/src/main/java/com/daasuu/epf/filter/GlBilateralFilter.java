@@ -6,7 +6,7 @@ import static android.opengl.GLES20.glUniform1f;
  * Created by sudamasayuki on 2017/05/18.
  */
 
-public class GlBilateralFilter extends GlFilter {
+public class GlBilateralFilter extends GlBaseFilter {
 
     private static final String VERTEX_SHADER =
             "attribute vec4 aPosition;" +

@@ -4,7 +4,7 @@ package com.daasuu.epf.filter;
  * Created by sudamasayuki on 2017/05/16.
  */
 
-public class GlSepiaFilter extends GlFilter {
+public class GlSepiaFilter extends GlBaseFilter {
     private static final String FRAGMENT_SHADER =
             "precision mediump float;" +
                     "varying vec2 vTextureCoord;" +

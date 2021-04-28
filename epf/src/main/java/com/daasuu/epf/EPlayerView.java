@@ -4,9 +4,10 @@ import android.content.Context;
 import android.opengl.GLSurfaceView;
 import android.util.AttributeSet;
 
-import com.daasuu.epf.chooser.EConfigChooser;
-import com.daasuu.epf.contextfactory.EContextFactory;
-import com.daasuu.epf.filter.GlFilter;
+import com.daasuu.epf.filter.GlBaseFilter;
+import com.daasuu.epf.render.EConfigChooser;
+import com.daasuu.epf.render.EContextFactory;
+import com.daasuu.epf.render.EPlayerRenderer;
 import com.google.android.exoplayer2.SimpleExoPlayer;
 import com.google.android.exoplayer2.video.VideoListener;
 
@@ -21,7 +22,7 @@ public class EPlayerView extends GLSurfaceView implements VideoListener {
     private SimpleExoPlayer player;
 
     private float videoAspect = 1f;
-    private PlayerScaleType playerScaleType = PlayerScaleType.RESIZE_FIT_HEIGHT;
+    private Scale scale = Scale.RESIZE_FIT_HEIGHT;
 
     public EPlayerView(Context context) {
         this(context, null);
@@ -49,12 +50,12 @@ public class EPlayerView extends GLSurfaceView implements VideoListener {
         return this;
     }
 
-    public void setGlFilter(GlFilter glFilter) {
+    public void setGlFilter(GlBaseFilter glFilter) {
         renderer.setGlFilter(glFilter);
     }
 
-    public void setPlayerScaleType(PlayerScaleType playerScaleType) {
-        this.playerScaleType = playerScaleType;
+    public void setPlayerScaleType(Scale scale) {
+        this.scale = scale;
         requestLayout();
     }
 
@@ -68,7 +69,7 @@ public class EPlayerView extends GLSurfaceView implements VideoListener {
         int viewWidth = measuredWidth;
         int viewHeight = measuredHeight;
 
-        switch (playerScaleType) {
+        switch (scale) {
             case RESIZE_FIT_WIDTH:
                 viewHeight = (int) (measuredWidth / videoAspect);
                 break;
@@ -108,5 +109,17 @@ public class EPlayerView extends GLSurfaceView implements VideoListener {
     @Override
     public void onRenderedFirstFrame() {
         // do nothing
+    }
+
+    /**
+     * Created by sudamasayuki on 2017/05/16.
+     */
+
+    public enum Scale {
+        RESIZE_FIT_WIDTH,  //
+        RESIZE_FIT_HEIGHT, //
+        RESIZE_NONE,   // The specified aspect ratio is ignored.
+        ;
+
     }
 }

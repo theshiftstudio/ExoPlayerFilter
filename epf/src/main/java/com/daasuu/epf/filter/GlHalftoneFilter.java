@@ -2,7 +2,7 @@ package com.daasuu.epf.filter;
 
 import android.opengl.GLES20;
 
-public class GlHalftoneFilter extends GlFilter {
+public class GlHalftoneFilter extends GlBaseFilter {
 
     private static final String HALFTONE_FRAGMENT_SHADER = "" +
             "precision mediump float;" +
@@ -41,7 +41,6 @@ public class GlHalftoneFilter extends GlFilter {
 
     @Override
     public void setFrameSize(int width, int height) {
-        super.setFrameSize(width, height);
         aspectRatio = (float) height / (float) width;
     }
 

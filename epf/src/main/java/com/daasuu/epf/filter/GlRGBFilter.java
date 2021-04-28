@@ -8,7 +8,7 @@ import android.opengl.GLES20;
  * green:
  * blue:
  */
-public class GlRGBFilter extends GlFilter {
+public class GlRGBFilter extends GlBaseFilter {
 
     private static final String RGB_FRAGMENT_SHADER = "" +
             "precision mediump float;" +

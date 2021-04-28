@@ -13,7 +13,7 @@ import com.daasuu.epf.filter.GlCGAColorspaceFilter;
 import com.daasuu.epf.filter.GlContrastFilter;
 import com.daasuu.epf.filter.GlCrosshatchFilter;
 import com.daasuu.epf.filter.GlExposureFilter;
-import com.daasuu.epf.filter.GlFilter;
+import com.daasuu.epf.filter.GlBaseFilter;
 import com.daasuu.epf.filter.GlFilterGroup;
 import com.daasuu.epf.filter.GlGammaFilter;
 import com.daasuu.epf.filter.GlGaussianBlurFilter;
@@ -161,10 +161,10 @@ public enum FilterType {
 //    }
 
 
-    public static GlFilter createGlFilter(FilterType filterType, Context context) {
+    public static GlBaseFilter createGlFilter(FilterType filterType, Context context) {
         switch (filterType) {
             case DEFAULT:
-                return new GlFilter();
+                return new GlBaseFilter();
             case BILATERAL_BLUR:
                 return new GlBilateralFilter();
             case BOX_BLUR:
@@ -247,7 +247,7 @@ public enum FilterType {
                 } catch (IOException e) {
                     Log.e("FilterType", "Error");
                 }
-                return new GlFilter();
+                return new GlBaseFilter();
             case TONE:
                 return new GlToneFilter();
             case VIBRANCE:
@@ -270,7 +270,7 @@ public enum FilterType {
             case BITMAP_OVERLAY_SAMPLE:
                 return new GlBitmapOverlaySample(BitmapFactory.decodeResource(context.getResources(), R.mipmap.ic_launcher_round));
             default:
-                return new GlFilter();
+                return new GlBaseFilter();
         }
     }
 

@@ -1,8 +1,8 @@
-package com.daasuu.epf;
+package com.daasuu.epf.render;
 
 import android.graphics.SurfaceTexture;
 
-import com.daasuu.epf.filter.GlPreviewFilter;
+import static android.opengl.GLES11Ext.GL_TEXTURE_EXTERNAL_OES;
 
 /**
  * Created by sudamasayuki on 2017/05/16.
@@ -24,7 +24,7 @@ class ESurfaceTexture implements SurfaceTexture.OnFrameAvailableListener {
 
 
     int getTextureTarget() {
-        return GlPreviewFilter.GL_TEXTURE_EXTERNAL_OES;
+        return GL_TEXTURE_EXTERNAL_OES;
     }
 
     void updateTexImage() {

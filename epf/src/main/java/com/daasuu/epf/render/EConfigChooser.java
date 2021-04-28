@@ -1,4 +1,4 @@
-package com.daasuu.epf.chooser;
+package com.daasuu.epf.render;
 
 import android.opengl.GLSurfaceView;
 import android.os.Build;
